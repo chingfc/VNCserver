@@ -2,7 +2,11 @@
 
 ##Chingfc
 
-##This script must be run by ROOT or SUPER USER!
+##This script must be run by ROOT or special SUPER USER!
+## Please make sure this script is a executable file
+## For brevity, I recommand to copy this file to /usr/local/sbin/SettingVNCport.sh, then
+## sudo chmod 755 /usr/local/sbin/SettingVNCport.sh
+## sudo ln -s /usr/local/sbin/SettingVNCport.sh /usr/bin/SettingVNCport
 
 [[ $(id -u) -eq 0 || $(id -u) -eq 1000 ]] || { echo >&2 "Must be root or admin user to run script"; exit 1; }
 
@@ -22,7 +26,7 @@ echo -e "                              User name: \033[36m$USER\033[0m          
 echo -e "                              Port: \033[36m$port\033[0m                                                 "
 echo -e "                              Dport: \033[36m$dport\033[0m                                               "
 
-read -p "Is this imformation right (y|n):" flag
+read -p "Are you sure to run this script? (y|n):" flag
 
 if [[ "$flag" =~ ^(Yes|yes|Y|y)$ ]]; then 
  /bin/sh -c "cp /etc/systemd/system/vncserver@.service /etc/systemd/system/vncserver@:$port\.service && \
@@ -48,7 +52,7 @@ if [[ "$flag" =~ ^(Yes|yes|Y|y)$ ]]; then
 	       sed -i -e "/<service name=\"nfs\"\/>/ a\  <port protocol=\"tcp\" port=\"$dport\"/>" /etc/firewalld/zones/public.xml	
 	    fi
 	    firewall-cmd --reload &> /dev/null
-	    echo "Checking whether port add sucessfully!"
+	    echo "Checking whether port add sucessfully..."
 	    if firewall-cmd --list-ports | grep $dport; then
 	       echo -e "\033[32m Port $dport has been added to firwall!\033[0m"
 	       echo -e "\033[32m Great jobs, enjoy your Centos world!\033[0m"
@@ -66,6 +70,6 @@ if [[ "$flag" =~ ^(Yes|yes|Y|y)$ ]]; then
 
  fi
 else
- echo "Bye for now! Best Wishes!"
+ echo -e "\033[31m Bye for now! Best Wishes!\033[0m"
  exit 1
 fi
