@@ -7,7 +7,7 @@
 ## For brevity, I recommand to copy this file to /usr/local/sbin/SettingVNCport.sh, then
 ## sudo chmod 755 /usr/local/sbin/SettingVNCport.sh
 ## sudo ln -s /usr/local/sbin/SettingVNCport.sh /usr/bin/SettingVNCport
-## Now, you can run this script just by typing SettingVNCport, here we go!
+## Now, you can run this script simply by typing SettingVNCport, here we go!
 
 [[ $(id -u) -eq 0 || $(id -u) -eq 1000 ]] || { echo >&2 "Must be root or admin user to run script"; exit 1; }
 
